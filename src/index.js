@@ -87,3 +87,16 @@ const craftObject = async (hash) => {
 exports('craftObject', (hash) => {
   craftObject(hash);
 });
+
+const changeModel = async (hash) => {
+  console.warn(`PLAYER CHANGE MODEL ${hash}`);
+  let model = GetHashKey(hash);
+  await loadModel(model);
+  SetPlayerModel(getId(), model, false);
+  N_0x283978a15512b2fe(getPed(), true);
+  SetModelAsNoLongerNeeded(model);
+};
+
+exports('changeModel', (model) => {
+  changeModel(model);
+});
