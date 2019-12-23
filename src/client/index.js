@@ -16,13 +16,11 @@ const setCoords = (x, y, z) => {
 
 exports('setCoords', setCoords);
 
-
 const getPed = () => {
   return GetPlayerPed(GetPlayerIndex());
 };
 
 exports('getPed', getPed);
-
 
 const getId = () => {
   return GetPlayerIndex();
@@ -45,7 +43,6 @@ const playScenario = async (scenario, delay) => {
 };
 
 exports('playScenario', (scenario, delay) => { // IF IT'S ASYNC FUNCTION 
-  console.log('fjsdlfdsfjsdlkfhdskfjsdfhkdjhfkwhdfkwhdfhwlsdfdsfh')
   playScenario(scenario, delay);
 });
 
@@ -100,3 +97,12 @@ const changeModel = async (hash) => {
 exports('changeModel', (model) => {
   changeModel(model);
 });
+
+const setSoloInstance = async (active) => {
+  console.warn(`SOLO INSTANCE ${active}`);
+  // get all entities id and hide them all 
+}
+
+exports('setSoloInstance', (active) => {
+  setSoloInstance(active);
+})
