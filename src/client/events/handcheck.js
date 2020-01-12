@@ -1,12 +1,11 @@
-
 onNet('playerSpawned', () => {
   emitNet('client:handcheck'); // Request handcheck to server
 });
 
-onNet('client:getProfil', async (profil) => { // Event trigger when handcheck is done
+onNet('client:getProfil', (profil) => { // Event trigger when handcheck is done
   if(profil) {
-    loadCharacterScene(profil);
+    loadCharacterScene(profil); // second param is first time load or not
   } else {
-    createCharacterScene();
+    exports.charactercreator.createCharacterScene();
   }
 });

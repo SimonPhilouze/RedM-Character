@@ -22,6 +22,12 @@ const getPed = () => {
 
 exports('getPed', getPed);
 
+const getPlayerId = () => {
+  return PlayerPedId();
+}
+
+exports('getPlayerId', getPlayerId);
+
 const getId = () => {
   return GetPlayerIndex();
 };
@@ -92,6 +98,7 @@ const changeModel = async (hash) => {
   SetPlayerModel(getId(), model, false);
   N_0x283978a15512b2fe(getPed(), true);
   SetModelAsNoLongerNeeded(model);
+  return true;
 };
 
 exports('changeModel', (model) => {
@@ -105,4 +112,17 @@ const setSoloInstance = async (active) => {
 
 exports('setSoloInstance', (active) => {
   setSoloInstance(active);
-})
+});
+
+const changeClothes = (hash) => {
+  console.warn(`CHANGE CLOTHES BY ${hash}`);
+  if (!hash.startsWith('0x')) {
+    hash = '0x' + hash;
+  }
+
+  N_0xd3a7b003ed343fd9(getPlayerId(), parseInt(hash), true, true, true);
+}
+
+exports('changeClothes', (hash) => {
+  changeClothes(hash);
+});
