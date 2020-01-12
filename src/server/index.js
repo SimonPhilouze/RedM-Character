@@ -45,7 +45,6 @@ const playScenario = async (scenario, delay) => {
 };
 
 exports('playScenario', (scenario, delay) => { // IF IT'S ASYNC FUNCTION 
-  console.log('fjsdlfdsfjsdlkfhdskfjsdfhkdjhfkwhdfkwhdfhwlsdfdsfh')
   playScenario(scenario, delay);
 });
 
@@ -74,18 +73,37 @@ const giveWeapon = (weapon) => {
 
 exports('giveWeapon', giveWeapon);
 
-const craftObject = async (hash) => {
-  console.warn(`PLAYER CREATE OBJECT ${hash}`);
-  const coords = getCoords();
+const spawnObject = async (hash, coords) => {
   const hashModel = GetHashKey(hash);
   await loadModel(hashModel);
-  let playerVector = GetEntityForwardVector(getPed());
-  const model = CreateObject(hashModel, coords.x + playerVector[0], coords.y + playerVector[1] , coords.z, true, true, true, true, true);
+  const model = CreateObject(hashModel, coords.x, coords.y, coords.z, true, true, true, true, true);
   PlaceObjectOnGroundProperly(model);
+  return model;
 };
 
-exports('craftObject', (hash) => {
-  craftObject(hash);
+exports('spawnObject', (hash, coords, cb) => {
+  // Seems that exports can't return promise or async function, so... callback...
+  spawnObject(hash, coords).then((res) => {
+    if (cb) return cb(res);
+  });
+});
+
+const craftObject = async (hash, cb) => {
+  console.warn(`PLAYER CREATE OBJECT ${hash}`);
+  const playerCoords = getCoords();
+  let playerVector = GetEntityForwardVector(getPed());
+  const coords = {
+    x: playerCoords.x + playerVector[0],
+    y: playerCoords.y + playerVector[1],
+    z: playerCoords.z,
+  };  
+  spawnObject(hash, coords, cb);
+};
+
+exports('craftObject', (hash, cb) => {
+  craftObject(hash).then((res) => {
+    if (cb) return cb(res);
+  });
 });
 
 const changeModel = async (hash) => {
